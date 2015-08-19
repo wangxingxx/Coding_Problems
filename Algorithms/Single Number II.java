@@ -13,6 +13,7 @@
  * On every bit, the reminder of the sum dividing 3 will be the bit value of the single number. 
 */
 
+/*1st round, using an additional array to represent bit-sum of 32 bits*/
 public class Solution {
     public int singleNumber(int[] nums) {
         int[] bits = new int[32];
@@ -29,6 +30,26 @@ public class Solution {
         for (int i=0;i<32;i++)
         {
         rst |= (bits[i]%3)<<i;
+        }
+        return rst;
+    }
+}
+
+/*2nd round, not using extra storage, running time is 32n=O(n)*/
+public class Solution {
+    public int singleNumber(int[] nums) {
+        int counts = 0;
+        int n = nums.length;
+        int rst = 0;        
+        for(int i=0;i<32;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(((nums[j]>>i)&1) == 1)
+                counts ++;
+            }
+            rst |=(counts%3)<<i;
+            counts=0;
         }
         return rst;
     }
