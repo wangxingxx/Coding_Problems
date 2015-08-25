@@ -38,3 +38,32 @@ public class Solution {
 		}
 	}
 }
+
+/*2nd round, one-pass, constant space*/
+public class Solution {
+    public void sortColors(int[] nums) {
+        if(nums==null) return;
+        
+        int n = nums.length;
+        if(n<2) return;
+
+        int zero = 0;
+        int two = n-1;
+        int i=0;
+        while(i<two+1) {
+            if(nums[i]==0 && zero<i){
+                nums[i]=nums[zero];
+                nums[zero]=0;
+                zero++;
+                continue;
+            }
+            if(nums[i]==2 && two > i) {
+                nums[i]=nums[two];
+                nums[two]=2;
+                two--;
+                continue;
+            }
+            i++;
+        }
+    }
+}
