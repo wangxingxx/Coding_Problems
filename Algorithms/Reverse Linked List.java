@@ -62,3 +62,29 @@ public class Solution {
     }
     
 }
+
+/*3rd round, recursively*/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+        //invariant: 
+        if (head==null) return null;
+        if (head.next==null) return head;
+        
+        ListNode curHead = head.next;
+        
+        ListNode rst = reverseList(curHead);
+        curHead.next=head;
+        head.next=null;
+        return rst;
+        
+    }
+    
+}
