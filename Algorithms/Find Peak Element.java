@@ -25,3 +25,22 @@ public class Solution {
         
     }
 }
+
+/*2nd round, recursively, O(lg n) running time*/
+public class Solution {
+    public int findPeakElement(int[] nums) {
+        int n = nums.length;
+        if(n==1) return 0;
+        return helper(nums,0,n-1);
+    }
+    public int helper (int[] nums, int start, int end){
+        if(start>=end) return end;
+        if(end-start==1 && nums[start]>nums[end]) return start;
+        if(end-start==1 && nums[end]>nums[start]) return end;
+        
+        int mid = (start+end)/2;
+        if(nums[mid]>nums[mid-1]&&nums[mid]>nums[mid+1]) return mid;
+        else if(nums[mid]<nums[mid-1]) return helper(nums, start, mid);
+        else return helper(nums, mid, end);
+    }
+}
