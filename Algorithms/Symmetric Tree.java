@@ -65,7 +65,7 @@ public class Solution {
 public class Solution {
     public boolean isSymmetric(TreeNode root) {
         //Corner cases:
-        if(root == null || (root.left == null && root.right == null)) {
+        if(root == null) {
             return true;
         }
         
