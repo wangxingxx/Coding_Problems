@@ -5,6 +5,8 @@
 
 
 
+
+/*1st round, recursively*/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -45,5 +47,56 @@ public class Solution {
         } else {
             return subSymmetric(curL.left, curR.right) && subSymmetric(curL.right, curR.left);
         }
+    }
+}
+
+
+
+/*2nd round, iteratively, using queue*/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        //Corner cases:
+        if(root == null || (root.left == null && root.right == null)) {
+            return true;
+        }
+        
+        //General cases:
+        Queue<TreeNode> lq = new LinkedList<TreeNode>();
+        Queue<TreeNode> rq = new LinkedList<TreeNode>();
+        lq.add(root.left);
+        rq.add(root.right);
+        TreeNode leftTemp = null;
+        TreeNode rightTemp = null;
+        while(!lq.isEmpty() && !rq.isEmpty()){
+            leftTemp = lq.poll();
+            rightTemp = rq.poll();
+            if(leftTemp == null && rightTemp == null) {
+                continue;
+            } else if(leftTemp == null || rightTemp == null) {
+                return false; 
+            }
+            
+            if(leftTemp.val != rightTemp.val) {
+                return false;
+            }
+            
+        //Left side iteration follows left-right order; Right side iteration follows right-left order.
+            lq.add(leftTemp.left);
+            lq.add(leftTemp.right);
+            rq.add(rightTemp.right);
+            rq.add(rightTemp.left);
+        }
+        
+        return true;
+        
     }
 }
