@@ -51,3 +51,29 @@ public class Solution {
         
     }
 }
+
+/*2nd round, improved time complexity to O(n)*/
+public class Solution {
+    public int maxArea(int[] height) {
+        //Corner cases:
+        if (height == null || height.length < 2) return 0;
+
+        //General cases:
+        int n = height.length;
+        int left = 0;
+        int right = n-1;
+        int rst = 0;
+        while(left<right) {
+            rst = Math.max(rst, (right - left) * Math.min(height[left], height[right]));
+            if (height[left] < height[right]) {
+                left ++;
+            }
+            else {
+                right --;
+            }
+        }
+        
+        return rst;
+        
+    }
+}
