@@ -16,16 +16,17 @@
 
 public class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        // search the 1st element of each row, 
-        // if it's smaller than target:
+        // ALG: 
+        // Search the 1st element of each row, 
+        // If it's smaller than target:
         //    check the last element of that row, if it's larger than target: 
         //            search in this row using binary search:
         //                   if found, return true;
         //                   otherwise continue to the next row.
         //            otherwise continue to the next row.
-        // if it's larger than target: continue to the next row.
-        // if it's the same return true;
-        // if reaching finishing search all the row, return false;
+        // If it's larger than target: continue to the next row.
+        // If it's the same return true;
+        // If reaching finishing search all the row, return false;
         
         // corner cases:
         
