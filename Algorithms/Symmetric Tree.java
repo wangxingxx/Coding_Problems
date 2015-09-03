@@ -100,3 +100,48 @@ public class Solution {
         
     }
 }
+
+/*3rd round, improved data structure usage, improved running time*/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        
+        //Corner cases:
+        if(root == null) {
+            return true;
+        }
+        //General cases:
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(root.left);
+        q.add(root.right);
+        TreeNode leftTemp = null;
+        TreeNode rightTemp = null;
+        while(!q.isEmpty()){
+            leftTemp = q.poll();
+            rightTemp = q.poll();
+            if(leftTemp == null && rightTemp == null) {
+                continue;
+            } else if(leftTemp == null || rightTemp == null) {
+                return false;
+            }
+            if(leftTemp.val != rightTemp.val) {
+                return false;
+            }
+            //Left side iteration follows left-right order; Right side iteration follows right-left order.
+            q.add(leftTemp.left);
+            q.add(rightTemp.right);
+            q.add(leftTemp.right);
+            q.add(rightTemp.left);
+        }
+        return true;
+
+    }
+}
