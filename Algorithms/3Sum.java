@@ -50,3 +50,61 @@ public class Solution {
         return rst;
     }
 }
+
+/*2nd round, sort nums first, and then using binary search to find third number for each combination of two numbers
+ *does the job, but still too slow
+ */
+public class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        // 2nd round, sort + binary search
+        List<List<Integer>> rst = new ArrayList<List<Integer>>();
+        
+        int n = nums.length;
+        Arrays.sort(nums);
+        for (int i = 0; i < n-2; i++) {
+            for (int j = i + 1; j < n-1; j++) {
+                int rest = 0 - nums[i] - nums[j];
+                int restID = bs(rest, nums, j+1, n-1);
+                if (restID != -1) {
+                    List<Integer> item = new ArrayList<Integer>();
+                    item.add(nums[i]);
+                    item.add(nums[j]);
+                    item.add(nums[restID]);
+                    rst.add(item);
+                }
+                
+            }
+        }
+        
+        int m = rst.size();
+        //for (int i = 0; i < m-1; i++) {
+        for (int i = 0; i < rst.size()-1; i++) {
+            Collections.sort(rst.get(i));
+            //for (int j = i + 1; j < m; j++) {
+            for (int j = i + 1; j < rst.size(); j++) {
+                Collections.sort(rst.get(j));
+                if (rst.get(i).equals(rst.get(j))) {
+                    rst.remove(j);
+                }
+            }
+        }
+        //for (int i = 0; i < rst.size(); i++) {
+        //    if (rst.get(i).size() == 0)
+        //        rst.remove(i);
+        //}
+        
+        return rst;
+    }
+    
+    private int bs(int target, int[] nums, int start, int end) {
+        if (start >= end) {
+            if (nums[end] == target) return end;
+            else return -1;
+        }
+        
+        int mid = (start + end) / 2;
+        if (nums[mid] == target) return mid;
+        else if (nums[mid] < target) return bs(target, nums, mid+1, end);
+        else return bs(target, nums, start, mid-1);
+    }
+}
