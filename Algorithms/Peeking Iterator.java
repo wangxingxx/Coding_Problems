@@ -10,6 +10,39 @@
  * How would you extend your design to be generic and work with all types, not just integer?
  */
 
+/*2nd round, make it generic*/
+class PeekingIterator<T> implements Iterator<T> {
+	T peekNext;
+	Iterator<T> itr;
+
+	public PeekingIterator(Iterator<T> iterator) {
+		itr = iterator;
+		peekNext = itr.hasNext() ? itr.next() : null;
+	}
+
+	// Returns the next element in the iteration without advancing the iterator.
+	public T peek() {
+		return peekNext;
+	}
+
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
+	@Override
+	public T next() {
+		T cachPeek = peekNext;
+		peekNext = itr.hasNext() ? itr.next() : null;
+		return cachPeek;
+	}
+
+	@Override
+	public boolean hasNext() {
+		return (peekNext != null);
+	}
+}
+
+
+
+/*1st round*/
 // Java Iterator interface reference:
 // https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html
 class PeekingIterator implements Iterator<Integer> {
