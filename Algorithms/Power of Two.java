@@ -44,3 +44,29 @@ public class Solution {
         
     }
 }
+
+/*3rd round, use square root to also find unqualified number*/
+public class Solution {
+    public boolean isPowerOfTwo(int n) {
+        //Brute force
+        if (n == 1) return true;
+        if (n < 2) return false;
+        
+        while (n > 1) {
+            if (n == 2) return true;
+            if (((double)n/2) % 2 != 0) return false;
+            else if (Math.sqrt(n) % 2 == 0) {
+                n = (int)(Math.sqrt(n));
+            }
+            else {
+                n = n/2;
+                if ((int)(Math.sqrt(n)) != Math.sqrt(n)) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+        
+    }
+}
