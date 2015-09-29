@@ -29,6 +29,9 @@ public class Solution {
     
     public int binarySearch(int start, int end, int[]nums, int target) {
         if (start > end) return -1;
+        //When only two elements left in the search, 
+        //the order may appear as decreasing order, opposite of the original array, 
+        //so handle such case seperately.
         if (end - start == 1) {
             if (nums[end] == target) return end;
             else if (nums[start] == target) return start;
@@ -37,9 +40,6 @@ public class Solution {
         
         int mid = (end+start)/2;
         if (nums[mid] == target) return mid;
-        //When only two elements left in the search, 
-        //the order may appear as decreasing order, opposite of the original array, 
-        //so handle such case seperately.
         if (nums[mid] > target) {
             if (nums[start] > target && nums[start] < nums[mid]) {
                 return binarySearch(mid+1, end, nums, target);
