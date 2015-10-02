@@ -9,7 +9,36 @@
  */
 
 
+/*2nd round, binary search to locate the range where duplicates are in*/
+public class Solution {
+    public int findDuplicate(int[] nums) {
+        // Corner case: because n>= 1, so nums.length = n+1 >= 2;
+        if (nums == null || nums.length == 1)
+            return -1;
 
+        // General case:
+        // binary search:
+        int n = nums.length-1;
+        int low = 1;
+        int upp = n;
+        while(low < upp){
+            int count=0;
+            int mid = (low+upp)/2;
+            for (int i = 0; i < n+1; i++) {
+                if (nums[i] <= mid) {
+                    count++;
+                }
+            }
+            if (count > mid) {
+                upp = mid;
+            } else {
+                low = mid + 1;
+            }
+            
+        }
+        return low;
+    }
+}
 
 /*1st round, brute force, O(n^2)*/
 public class Solution {
