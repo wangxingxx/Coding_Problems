@@ -4,6 +4,37 @@
  * For "bbbbb" the longest substring is "b", with the length of 1.
  */
 
+
+/*5th round, using an index array and looping pointer i to set slide window 
+ * between the last occurance of a character and current occurance of that character*/
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        //corner cases
+        if (n<2) {
+            return n;
+        }
+        
+        //general cases
+        int[] indexArr = new int[256];
+        //use element in this array (index of the last occurance of a character) 
+        //and the following i to set the slide window 
+        //between last occurance and current occurance
+        Arrays.fill(indexArr, -1);
+        int lastOccur = 0;
+        int maxSub=1;
+        for(int i = 0; i < n; i++){
+            lastOccur = Math.max(lastOccur,indexArr[s.charAt(i)]+1);
+            indexArr[s.charAt(i)] = i;
+            
+            maxSub = Math.max(maxSub, i - lastOccur + 1);
+        }
+        
+        return maxSub;
+        
+    }
+}
+
 /*4th round, using HashMap to make checking duplicates to be O(1)*/
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
