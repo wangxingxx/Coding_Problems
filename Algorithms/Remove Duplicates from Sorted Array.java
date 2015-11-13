@@ -11,22 +11,25 @@
 /*1st round, in-place, O(n) time, O(1) space*/
 public class Solution {
     public int removeDuplicates(int[] nums) {
-        //Corner case:
-        if (nums == null || nums.length == 0) return 0;
-        if (nums.length == 1) return 1;
+        //alg: maintain two pointers:
+        // p1 travers the array one-by-one, 
+        // p2 only moves when a new unique element is found by p1, and copy that element to [p2].
         
-        //General case:
         int n = nums.length;
-        int pointer = 1;
-        
-        for(int i = 1; i < n; i++) {
-            if (nums[i] != nums[i-1]) {
-                nums[pointer] = nums[i];
-                pointer++;
+        //corner cases
+        //TODO: null, empty, length = 1
+        if (n < 2) {
+            return n;
+        }
+        //general cases
+        int p2 = 1;
+        for(int p1 = 1; p1 < n; p1++) {
+            if (nums[p1] != nums[p1-1]) {
+                nums[p2++] = nums[p1];
             }
         }
         
-        return pointer;
-        
+        return p2; 
+        //p2 points to the place to write a unique element, but not yet. So the last element of unique array is p2 - 1, so the length of that array would be p2 - 1 + 1 = p2, instead of p2 + 1;
     }
 }
