@@ -4,8 +4,35 @@
  * For "bbbbb" the longest substring is "b", with the length of 1.
  */
 
+/*4th round, using HashMap to make checking duplicates to be O(1)*/
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        //corner cases
+        if (s == null || s.isEmpty()) {
+            return 0;
+        }
+        
+        //general cases
+        int p1 = 0;
+        int p2 = 0;
+        int maxSub = 1;
+        HashMap<Character, Integer> checker = new HashMap<Character, Integer>();
+        outer: while (p1 < s.length()) {
+            if(checker.containsKey(s.charAt(p1))) {
+                p2 = Math.max(p2, checker.get(s.charAt(p1))+1);
+            }
+            checker.put(s.charAt(p1), p1);
+            maxSub = Math.max(maxSub, p1 - p2 + 1);
+            p1++;
+        }
+        
+        return maxSub;
+        
+    }
+}
 
 /*3rd round, modified brute force, not using subString*/
+//checking if a char is already contained in the sliding window is the most costly part.
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
         //corner cases
