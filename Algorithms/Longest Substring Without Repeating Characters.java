@@ -7,9 +7,10 @@
 /*4th round, using HashMap to make checking duplicates to be O(1)*/
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
         //corner cases
-        if (s == null || s.isEmpty()) {
-            return 0;
+        if (n<2) {
+            return n;
         }
         
         //general cases
@@ -17,7 +18,7 @@ public class Solution {
         int p2 = 0;
         int maxSub = 1;
         HashMap<Character, Integer> checker = new HashMap<Character, Integer>();
-        outer: while (p1 < s.length()) {
+        outer: while (p1 < n) {
             if(checker.containsKey(s.charAt(p1))) {
                 p2 = Math.max(p2, checker.get(s.charAt(p1))+1);
             }
