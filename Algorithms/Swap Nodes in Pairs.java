@@ -5,6 +5,52 @@
  * Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
  */
 
+/*2nd round, use two pointers and a dummyhead, in-place, one-pass, 0ms*/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode swapPairs(ListNode head) {
+        
+        //corner case
+        //null, single node
+        if(head == null || head.next == null) {
+            return head;
+        }
+        
+        //general case:
+        ListNode dummyHead = new ListNode(-1);
+        dummyHead.next = head;
+        ListNode slow = dummyHead;
+        ListNode fast = head;
+        ListNode tmp;
+        while(fast.next != null) {
+            tmp = fast.next.next;
+            if (slow == dummyHead) {
+                dummyHead.next = fast.next;
+            }
+            slow.next = fast.next;
+            slow.next.next = fast;
+            fast.next = tmp;
+            slow = fast;
+            if (tmp == null) {
+                break;
+            } else {
+                fast = tmp;
+            }
+        }
+        
+        return dummyHead.next;
+        
+    }
+}
+
+/*1st round, two months ago, forgot to leave much comment, used 302ms*/
 /**
  * Definition for singly-linked list.
  * public class ListNode {
