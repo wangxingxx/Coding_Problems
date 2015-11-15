@@ -9,6 +9,111 @@
  * A solution set is: (-1, 0, 1) (-1, -1, 2)
  */
 
+/*5th round, minor modification, use one method instead of separate helpers with global variables*/
+public class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> rst = new ArrayList<List<Integer>>();
+        
+        //corner case
+        if (nums == null || nums.length < 3) {
+            return rst;
+        }
+        
+        
+        //general case
+        Arrays.sort(nums); 
+        int n = nums.length;
+        int p1 = 0,  p2 = n - 1;
+        int rest;
+        
+        while ( p1 < n - 2) {
+            if (p1 == 0 || (p1 > 0 && nums[p1] != nums[p1-1])) {
+                while (p1 < p2 - 1) {
+                    if (p2 == n - 1 || (p2 < n -1 && nums[p2] != nums[p2+1])) {
+                        rest = nums[p1] + nums[p2];
+                        if ( -rest >= nums[p1] && -rest <= nums[p2] ) {
+                            for (int i = p1+1; i < p2; i++) {
+                                if (nums[i] + nums[p1] + nums[p2] == 0) {
+                                List<Integer> triplet = new ArrayList<Integer>();
+                                triplet.add(nums[p1]);
+                                triplet.add(nums[i]);
+                                triplet.add(nums[p2]);
+                                rst.add(triplet);
+                                break;
+                                }
+                            }
+                        }
+                    }
+                    p2--;
+                }
+            }
+            p2 = n - 1;
+            p1++;
+        }
+        
+        return rst;
+        
+    }
+} 
+/*4th round, brute force, O(N^2), works, but only beat less than half record.*/
+public class Solution {
+    int[] stNums;
+    int rest;
+    int p1;
+    int p2;
+    List<List<Integer>> rst = new ArrayList<List<Integer>>();
+    public List<List<Integer>> threeSum(int[] nums) {
+        
+        //corner case
+        if (nums == null || nums.length < 3) {
+            return rst;
+        }
+        
+        
+        //general case
+        Arrays.sort(nums); 
+        stNums = nums;//acceptable? TODO
+        p1 = 0;
+        int n = stNums.length;
+        p2 = n - 1;
+        
+        while ( p1 <= n - 3) {
+            if (p1 > 0 && stNums[p1] == stNums[p1-1]) {
+                    p1++;
+                    continue;
+            }
+            while (p1 < p2 - 1) {
+                if (p2 < n -1 && stNums[p2] == stNums[p2+1]) {
+                    p2--;
+                    continue;
+                }
+                rest = stNums[p1] + stNums[p2];
+                searchRest();
+                p2--;
+            }
+            p2 = n - 1;
+            p1++;
+        }
+        
+        return rst;
+        
+    }
+    
+    private void searchRest(){
+        if ( -rest >= stNums[p1] && -rest <= stNums[p2] ) {
+            for (int i = p1+1; i < p2; i++) {
+                if (stNums[i] + stNums[p1] + stNums[p2] == 0) {
+                    List<Integer> triplet = new ArrayList<Integer>();
+                    triplet.add(stNums[p1]);
+                    triplet.add(stNums[i]);
+                    triplet.add(stNums[p2]);
+                    rst.add(triplet);
+                    return;
+                }
+            }
+        }
+    } 
+}
 /*3rd round, O(N^2), still too slow*/
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
