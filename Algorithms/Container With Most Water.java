@@ -8,7 +8,54 @@
  */
 
 
+/*3rd round, O(n) using two pointers, choose to move with condition*/
+public class Solution {
+    public int maxArea(int[] height) {
+        //alg: two pointers from two ends move towards center.
+        
+        int rst = 0;//naturally handle the corner case of n < 2;
 
+        //general case:
+        int l = 0, r = height.length-1;
+        while (l < r) {
+            rst = Math.max(rst, Math.min(height[l], height[r]) * (r - l));
+            if (height[l] < height[r]) {
+                l++;
+            }else r--;
+        }
+        
+        return rst;
+    }
+}
+
+
+/*2nd, more concise code, but still too slow, O(n^2)*/
+public class Solution {
+    public int maxArea(int[] height) {
+        //alg: two pointers from two ends move towards center.
+        
+        int n = height.length;
+        int rst = 0;
+        //corner case
+        if (n < 2) {
+            return rst;
+        }
+        if (n == 2) {
+            rst = Math.min(height[0], height[1]);
+            return rst;
+        }
+        
+        //general case:
+        for (int i = 0; i < n - 2; i ++) {
+            for (int j = n - 1; j > i; j--) {
+                int curr = Math.min (height[i], height[j]) * (j - i);
+                rst = Math.max(rst, curr);
+            }
+        }
+        
+        return rst;
+    }
+}
 
 /*1st round. Works for small input but too expensive for large data*/
 public class Solution {
