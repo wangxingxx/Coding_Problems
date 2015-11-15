@@ -9,6 +9,56 @@
  * A solution set is: (-1, 0, 1) (-1, -1, 2)
  */
 
+/*6th round, use one pointer and loop to find the other two elements, improved time*/
+public class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> rst = new ArrayList<List<Integer>>();
+        
+        //corner case
+        if (nums == null || nums.length < 3) {
+            return rst;
+        }
+        
+        
+        //general case
+        Arrays.sort(nums); 
+        int n = nums.length;
+        
+        List<Integer> triplet;
+        
+        for(int i = 0; i < n - 2; i++) {
+            if (i == 0 || (i > 0 && nums[i] != nums[i-1])) {
+                int rest = 0-nums[i];
+                int lo = i + 1;
+                int hi = n - 1;
+                while (lo < hi) {
+                    if (nums[lo] + nums[hi] == rest) {
+                        triplet = Arrays.asList(nums[i],nums[lo],nums[hi]);
+                        //faster than add element one by one (asList doesn't make copy but only create a view of the array as fixed-sized list)
+                        rst.add(triplet);
+                        while (lo < hi && nums[lo+1] == nums[lo]) {
+                            //loop ends at the last element that is the same, so will need another lo++;
+                            lo++;
+                        }
+                        while (lo < hi && nums[hi-1] == nums[hi]) {
+                            //loop ends at the last element that is the same, so will need another hi--;
+                            hi--;
+                        }
+                        //when the next element is not the same
+                        lo++;
+                        hi--;
+                    }else if (nums[lo] + nums[hi] > rest) {
+                        hi--;
+                    }else {
+                        lo++;
+                    }
+                }
+            }
+        }
+        return rst;
+    }
+}
+
 /*5th round, minor modification, use one method instead of separate helpers with global variables*/
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
