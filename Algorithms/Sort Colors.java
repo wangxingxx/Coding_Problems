@@ -5,6 +5,63 @@
  * Note:
  * You are not suppose to use the library's sort function for this problem.
 
+
+/*3rd round, one-pass, in-place*/
+public class Solution {
+    public void sortColors(int[] nums) {
+        //corner case
+        //empty and single elment nums
+        //if (n < 2) return;
+        
+        //general case:
+        int front = 0, back = nums.length - 1;
+        for (int i = 0; i <= back;) {
+            if (front >= back) break;
+            
+            if (nums[i] == 0) {
+                nums[i] = nums[front];
+                nums[front] = 0;
+                front++;
+            }
+            if (nums[i] == 2) {
+                nums[i] = nums[back];
+                nums[back] = 2;
+                back--;
+                continue;
+            }
+            i++;
+        }
+    }
+}
+/*2nd round, one-pass, constant space*/
+public class Solution {
+    public void sortColors(int[] nums) {
+        if(nums==null) return;
+        
+        int n = nums.length;
+        if(n<2) return;
+
+        int zero = 0;
+        int two = n-1;
+        int i=0;
+        while(i<two+1) {
+            if(nums[i]==0 && zero<i){
+                nums[i]=nums[zero];
+                nums[zero]=0;
+                zero++;
+                continue;
+            }
+            if(nums[i]==2 && two > i) {
+                nums[i]=nums[two];
+                nums[two]=2;
+                two--;
+                continue;
+            }
+            i++;
+        }
+    }
+}
+
 /*1st round, two passes, constant space*/
 public class Solution {
     public void sortColors(int[] nums) {
@@ -37,33 +94,4 @@ public class Solution {
 				nums[i] = 1;
 		}
 	}
-}
-
-/*2nd round, one-pass, constant space*/
-public class Solution {
-    public void sortColors(int[] nums) {
-        if(nums==null) return;
-        
-        int n = nums.length;
-        if(n<2) return;
-
-        int zero = 0;
-        int two = n-1;
-        int i=0;
-        while(i<two+1) {
-            if(nums[i]==0 && zero<i){
-                nums[i]=nums[zero];
-                nums[zero]=0;
-                zero++;
-                continue;
-            }
-            if(nums[i]==2 && two > i) {
-                nums[i]=nums[two];
-                nums[two]=2;
-                two--;
-                continue;
-            }
-            i++;
-        }
-    }
 }
