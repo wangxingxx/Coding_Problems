@@ -8,6 +8,11 @@
  * return [3, 4].
 */
 
+/*2nd round, two-pass of binary search to find two boundaries. 
+ *First search for left boundary first,
+ *and then right boundary based on left boundary
+ */
+
 /*1st round, binary search to find the first number == target, than linear search to find left and right boundary, worst case O(n)*/
 public class Solution {
     public int[] searchRange(int[] nums, int target) {
