@@ -8,7 +8,7 @@
  * return [3, 4].
 */
 
-/*1st round, worst case O(n)*/
+/*1st round, binary search to find the first number == target, than linear search to find left and right boundary, worst case O(n)*/
 public class Solution {
     public int[] searchRange(int[] nums, int target) {
         
