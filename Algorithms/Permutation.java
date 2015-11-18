@@ -6,6 +6,43 @@
  */
 
 
+/*4th round, recurrsively,
+ * using the same idea of 2nd round, using insertion to create permutations
+ */
+public class Solution {
+    List<List<Integer>> rst = new ArrayList<List<Integer>>();
+    List<Integer> p = new ArrayList<Integer>();
+    int[] num;
+    int n;
+    int[] visited;
+
+    public List<List<Integer>> permute(int[] num) {
+        this.num = num;
+        n = this.num.length;
+        visited = new int[n];//inital state all zeros.
+        subpermute();
+        return rst;
+    }
+    
+    private void subpermute(){
+        if(p.size() == n) {
+            rst.add(new ArrayList<Integer>(p));
+            return;
+        }
+        
+        for(int i = 0; i < n; i++) {
+            if(visited[i] == 0) {
+                visited[i] = 1;
+                p.add(num[i]);
+                subpermute();
+                visited[i] = 0;
+                p.remove(p.size()-1);
+            }
+        }
+    }
+
+}
+
 /*3rd round, recurrsively, 
 by making all possible swaps on original list to create variation as new permutation
 this alg faster for this problem, 
