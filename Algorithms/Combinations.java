@@ -13,6 +13,49 @@
  *]
 */
 
+/*
+ * 2nd round, recurrsively, faster and removed unnessary state
+ * by using j to limit we only look forward to numbers behind current numbers 
+ * can achieve the goal to avoid duplicates. 
+ */
+public class Solution {
+	private List<List<Integer>> rst = new ArrayList<List<Integer>>();
+	private List<Integer> entry = new ArrayList<Integer>();
+	private int[] num;
+
+	private int n;
+	private int k;
+
+	public List<List<Integer>> combine(int n, int k) {
+		// if (n < k ) return rst;
+		this.num = new int[n];
+		this.n = n;
+		this.k = k;
+		for (int i = 0; i < n; i++) {
+			num[i] = i + 1;
+		}
+		dfs(0);
+		return rst;
+	}
+
+	private void dfs(int start) {
+
+		if (entry.size() == k) {
+			rst.add(new ArrayList<Integer>(entry));
+			return;
+		}
+		for (int j = start; j < n; j++) {
+
+			entry.add(num[j]);
+			dfs(j + 1);
+			entry.remove(entry.size() - 1);
+
+		}
+	}
+}
+
+
+
 
 /*1st round, recurrsively, similar idea of Permutation.
  * using dfs to find all possible ways to insert new number
