@@ -5,6 +5,46 @@
  *[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
  */
 
+
+/*3rd round, recurrsively, 
+by making all possible swaps on original list to create variation as new permutation
+this alg faster for this problem, 
+and using much less extra space by using global variables */
+    public class Solution {    
+       List<List<Integer>> rst = new ArrayList<List<Integer>>();
+       int[] numcopy;
+       int n;
+    public List<List<Integer>> permute(int[] num) {
+        numcopy = num;
+        n = numcopy.length;
+        subPermute(0);
+        return rst;
+    }
+    
+    private void subPermute(int start){
+        
+        if(start >= n) {
+            List<Integer> perm = new ArrayList<Integer>();
+            for(int elm : numcopy) {
+                perm.add(elm);
+            }
+            rst.add(perm);
+        } else {
+            for(int i = start; i < n; i++) {
+                swap(start, i);
+                subPermute(start+1);
+                swap(start, i);
+            }
+        }
+    }
+    
+    private void swap(int i, int j){
+        int tmp = numcopy[i];
+        numcopy[i] = numcopy[j];
+        numcopy[j] = tmp;
+    }
+}
+
 /*2nd round, minor change in inner loop 
 (copy pm first then add new number, so don't need to roll back)
 to clean up the logic flow.*/
@@ -29,7 +69,7 @@ public class Solution {
                 for (int j = 0; j < pm.size() + 1; j++) {
                     List<Integer> tmpPm = new ArrayList<Integer>(pm);
                     tmpPm.add(j, num[i]);
-                    current.add(tmpPm);
+                    tmpRst.add(tmpPm);
                 }
             }
             
