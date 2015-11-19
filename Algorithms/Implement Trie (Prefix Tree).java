@@ -1,6 +1,35 @@
 /*Problem: Implement Trie (Prefix Tree)*/
 
-/*3rd round, recursive, DFS, 1ms, beats 99.37*/
+/*4th round, recursive, DFS but no need to reverse by always inserting at 0th index. 
+ *Slower then the 3rd round that reverse at last step, 
+large problem size shouldnot use this one*/
+public class Solution {
+     List<List<Integer>> rst = new ArrayList<List<Integer>>();
+    
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        //Corner case:
+        if (root == null) return rst;
+        
+        traverse(root,0);
+        return rst;
+    }
+    
+    public void traverse(TreeNode node, int layer) {
+        if (node == null) return;
+        int n = rst.size();
+        if (n < layer + 1) {
+            List<Integer> layerLst = new ArrayList<Integer>();
+            layerLst.add(node.val);
+            rst.add(0,layerLst);
+        } else {
+            rst.get(n-layer-1).add(node.val);
+        }
+        traverse(node.left, layer+1);
+        traverse(node.right, layer+1);
+    }
+}
+
+/*3rd round, recursive, DFS then reverse the rst list, 1ms, beats 99.37*/
 public class Solution {
      List<List<Integer>> rst = new ArrayList<List<Integer>>();
     
