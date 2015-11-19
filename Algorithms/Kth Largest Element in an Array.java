@@ -9,6 +9,7 @@
 
 
 /*1st round, using Java PriorityQueue, O(nlogk)*/
+/*also work for finding all top K elements, just return the current elements in the queue*/
 public class Solution {
     
     public int findKthLargest(int[] nums, int k) {
