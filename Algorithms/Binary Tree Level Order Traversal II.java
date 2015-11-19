@@ -8,8 +8,32 @@
  * [[15,7],[9,20],[3]]
  */
 
+/*2nd round, iteratively, 
+ *ordinary order BFS, but result of each layer is stored in reverse order by always insert at 0-th index
+ */
+public class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> rst = new LinkedList<List<Integer>>();
+        if(root == null) return rst;
+        
+        Queue<TreeNode> q = new LinkedList<TreeNode>();//choose queue is because the traverse is still bottom up, only the result is stored in reverse order.
+        q.add(root);
+        while(!q.isEmpty()){
+            int levelNum = q.size();
+            List<Integer> subList = new LinkedList<Integer>();
+            for(int i=0; i<levelNum; i++) {
+                if(q.peek().left != null) q.add(q.peek().left);
+                if(q.peek().right != null) q.add(q.peek().right);
+                subList.add(q.poll().val);//retrive (and remove) head of the queue and add to sublist
+            }
+            rst.add(0, subList);//add a new list to rst only when finishing a scan of this layer.
+                                //by adding at index 0, reverse the order to bottom-up.
+        }
+        return rst;
+    }
+}
 
-
+/*1st round, recursively*/
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
