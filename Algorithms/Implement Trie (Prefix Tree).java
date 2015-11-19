@@ -1,5 +1,34 @@
 /*Problem: Implement Trie (Prefix Tree)*/
 
+/*3rd round, recursive, DFS, 1ms, beats 99.37*/
+public class Solution {
+     List<List<Integer>> rst = new ArrayList<List<Integer>>();
+    
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        //Corner case:
+        if (root == null) return rst;
+        
+        traverse(root,0);
+        List<List<Integer>> rstRV = new ArrayList<List<Integer>>();
+        for (int i = rst.size() - 1; i >= 0; i--) {
+            rstRV.add(rst.get(i));
+        }
+        return rstRV;
+    }
+    
+    public void traverse(TreeNode node, int layer) {
+        if (node == null) return;
+        if (rst.size() < layer + 1) {
+            List<Integer> layerLst = new ArrayList<Integer>();
+            layerLst.add(node.val);
+            rst.add(layerLst);
+        } else {
+            rst.get(layer).add(node.val);
+        }
+        traverse(node.left, layer+1);
+        traverse(node.right, layer+1);
+    }
+}
 
 /*2nd round, used HashMap, slower than array, poor data structure choide*/
 class TrieNode {
